@@ -15,6 +15,7 @@ class ImageViewModel {
     private var isLoading = false
     var reloadData: (() -> Void)?
     
+    //Fetch image in aync manner and reload data
     func fetchPhotosAsync(loadMore: Bool = false) {
         guard !isLoading else { return }
         isLoading = true
@@ -32,21 +33,6 @@ class ImageViewModel {
             } catch {
                 print(" Error fetching photos: \(error)")
                 isLoading = false
-            }
-        }
-    }
-    
-    func fetchPhotos() {
-        
-        apiService.fetchPhotos { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let photos):
-                    self?.photos = photos
-                    self?.reloadData?()
-                case .failure(let error):
-                    print("Error fetching photos: \(error.localizedDescription)")
-                }
             }
         }
     }

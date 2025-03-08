@@ -11,6 +11,7 @@ class PhotoCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
+//    load and cache Image
     func configure(with photo: Photo) {
         imageView.loadImage(from: photo.src.medium)
         imageView.layer.cornerRadius = 8

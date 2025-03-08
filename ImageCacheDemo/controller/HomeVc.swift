@@ -29,7 +29,6 @@ class HomeVc: UIViewController {
     
     private func setupActivityIndicator() {
         activityIndicator.center = view.center
-        
         view.addSubview(activityIndicator)
         activityIndicator.center = view.center
     }
@@ -39,6 +38,7 @@ class HomeVc: UIViewController {
         collectionView.dataSource = self
     }
     
+    //fetch data from viewmodel and reload collection
     private func fetchData() {
         activityIndicator.startAnimating()
         viewModel.fetchPhotosAsync()
@@ -56,7 +56,7 @@ extension HomeVc : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
-        let photo = viewModel.photos[indexPath.row]
+        let photo = viewModel.photos[indexPath.row]//get Image from viewmodel
         cell.configure(with: photo)
         return cell
 
@@ -70,8 +70,8 @@ extension HomeVc {
         let frameHeight = scrollView.frame.size.height
         
         if offsetY > contentHeight - frameHeight - 200 {
-            activityIndicator.startAnimating()
-            viewModel.fetchPhotosAsync() // Load more images
+            activityIndicator.startAnimating()//Add loader while fetching image
+            viewModel.fetchPhotosAsync() // Load more images for paginatation
         }
     }
 }
